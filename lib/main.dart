@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MyApp());
 }
+
+// --- COLORES PSICODÉLICOS ---
+const Color neonPink = Color(0xFFFF007F);
+const Color neonCyan = Color(0xFF00FFFF);
+const Color neonGreen = Color(0xFF00FF00);
+const Color darkBg = Color(0xFF0A0014);
+const Color darkPanel = Color(0xFF1A0033);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -10,21 +18,109 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Calculadora de Notas',
+      title: 'Academic Check',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        scaffoldBackgroundColor: darkBg,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF023052),
-          primary: const Color(0xFF023052),
-          secondary: const Color(0xFFFFCC00),
+          seedColor: neonPink,
+          brightness: Brightness.dark,
         ),
         useMaterial3: true,
+        fontFamily: 'Courier', // Fuente estilo hacker/psicodélico
       ),
-      home: const PromedioPage(),
+      home: const PsychoSplashScreen(),
     );
   }
 }
 
+// --- SPLASH SCREEN LOCAZO ---
+class PsychoSplashScreen extends StatefulWidget {
+  const PsychoSplashScreen({super.key});
+
+  @override
+  State<PsychoSplashScreen> createState() => _PsychoSplashScreenState();
+}
+
+class _PsychoSplashScreenState extends State<PsychoSplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Navegar a la página principal después de 4 segundos
+    Timer(const Duration(seconds: 4), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const PromedioPage()),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF1a0033), Color(0xFF001a33), Color(0xFF33001a)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Caballo Gigante
+            const Text(
+              "🐎",
+              style: TextStyle(
+                fontSize: 120,
+                shadows: [
+                  Shadow(color: neonPink, blurRadius: 30),
+                  Shadow(color: neonCyan, blurRadius: 60),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            // Texto Glitch simulado
+            const Text(
+              "WELCOME TO\nACADEMIC CHECK",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w900,
+                color: neonCyan,
+                shadows: [
+                  Shadow(color: neonPink, offset: Offset(3, 3), blurRadius: 5),
+                  Shadow(color: neonGreen, offset: Offset(-3, -3), blurRadius: 5),
+                ],
+                letterSpacing: 4,
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              "MAKANAKI BOTAME TU GAAAAA 🚀",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: neonGreen,
+                shadows: [Shadow(color: neonGreen, blurRadius: 15)],
+                letterSpacing: 2,
+              ),
+            ),
+            const SizedBox(height: 50),
+            const CircularProgressIndicator(
+              color: neonPink,
+              backgroundColor: neonCyan,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// --- PÁGINA PRINCIPAL ---
 class PromedioPage extends StatefulWidget {
   const PromedioPage({super.key});
 
@@ -89,10 +185,10 @@ class _PromedioPageState extends State<PromedioPage> {
 
       if (promedioEP < 12.50) {
         _notaFinal = promedioEP;
-        _mensaje = "Desaprobado: EP < 12.5";
+        _mensaje = "Desaprobado: EP < 12.5 💀";
       } else {
         _notaFinal = (promedioES * wT_Es) + (promedioEP * wT_Ep) + (nEcg * wT_Ecg);
-        _mensaje = _notaFinal! >= 10.5 ? "¡Aprobado!" : "Desaprobado";
+        _mensaje = _notaFinal! >= 10.5 ? "¡Aprobado! 🎉" : "Desaprobado 💀";
       }
     });
   }
@@ -109,27 +205,56 @@ class _PromedioPageState extends State<PromedioPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE1E4E6),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF023052),
-        title: const Text("Calculadora Académica", style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.black,
+        title: const Text(
+          "ACADEMIC CHECK",
+          style: TextStyle(
+            color: neonCyan,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 2,
+            shadows: [
+              Shadow(color: neonPink, offset: Offset(2, 2), blurRadius: 4),
+            ],
+          ),
+        ),
         centerTitle: true,
+        leading: const Center(
+          child: Text("🐎", style: TextStyle(fontSize: 24, shadows: [Shadow(color: neonGreen, blurRadius: 10)])),
+        ),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(2.0),
+          child: Container(
+            color: neonPink,
+            height: 2.0,
+            width: double.infinity,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             // --- SECCIÓN DE PESOS COLAPSABLE ---
-            Card(
-              elevation: 0,
-              color: Colors.white.withOpacity(0.8),
+            Container(
+              decoration: BoxDecoration(
+                color: darkPanel.withOpacity(0.8),
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: neonPink, width: 2),
+                boxShadow: const [BoxShadow(color: neonPink, blurRadius: 10)],
+              ),
               child: Column(
                 children: [
                   ListTile(
                     onTap: () => setState(() => _pesosExpandidos = !_pesosExpandidos),
-                    title: const Text("CONFIGURACIÓN DE PESOS (%)", 
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF023052))),
-                    trailing: Icon(_pesosExpandidos ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),
+                    title: const Text(
+                      "CONFIGURACIÓN DE PESOS (%)", 
+                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: neonCyan, letterSpacing: 1),
+                    ),
+                    trailing: Icon(
+                      _pesosExpandidos ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                      color: neonPink,
+                    ),
                     dense: true,
                   ),
                   if (_pesosExpandidos)
@@ -140,7 +265,7 @@ class _PromedioPageState extends State<PromedioPage> {
                           _buildWeightRow("U1", _wU1Es, _wU1Ep),
                           _buildWeightRow("U2", _wU2Es, _wU2Ep),
                           _buildWeightRow("U3", _wU3Es, _wU3Ep),
-                          const Divider(),
+                          const Divider(color: neonPink),
                           Row(
                             children: [
                               Expanded(child: _buildSmallInput(_wTotalEs, "T. ES %")),
@@ -157,70 +282,122 @@ class _PromedioPageState extends State<PromedioPage> {
               ),
             ),
             
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
 
             // --- SECCIÓN DE NOTAS ---
             _buildUnidadCard("UNIDAD 1", _u1Es, "Nota ES", _u1Ep, "Nota EP"),
             _buildUnidadCard("UNIDAD 2", _u2Es, "Nota ES", _u2Ep, "Nota EP"),
             _buildUnidadCard("UNIDAD 3", _u3Es, "Nota ES", _u3Ep, "Nota EP"),
             
-            Card(
+            Container(
+              margin: const EdgeInsets.only(bottom: 20),
+              decoration: BoxDecoration(
+                color: darkPanel,
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: neonCyan, width: 2),
+                boxShadow: const [BoxShadow(color: neonCyan, blurRadius: 10)],
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: TextField(
                   controller: _ecg,
                   keyboardType: TextInputType.number,
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                   decoration: const InputDecoration(
                     labelText: "Nota ECG (Competencia Genérica)",
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.star, color: Color(0xFFFFCC00)),
+                    labelStyle: TextStyle(color: neonCyan),
+                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: neonPink)),
+                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: neonGreen, width: 2)),
+                    prefixIcon: Icon(Icons.star, color: neonGreen),
                   ),
                 ),
               ),
             ),
 
-            const SizedBox(height: 15),
-
+            // BOTONES ÉPICOS
             Row(
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: _calcular,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF023052),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: const [BoxShadow(color: neonGreen, blurRadius: 15)],
                     ),
-                    child: const Text("CALCULAR"),
+                    child: ElevatedButton(
+                      onPressed: _calcular,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: neonGreen,
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      ),
+                      child: const Text("CALCULAR", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, letterSpacing: 2)),
+                    ),
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 15),
                 Expanded(
-                  child: OutlinedButton(
-                    onPressed: _reset,
-                    style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 15)),
-                    child: const Text("RESET"),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: const [BoxShadow(color: neonPink, blurRadius: 15)],
+                    ),
+                    child: OutlinedButton(
+                      onPressed: _reset,
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: neonPink, width: 2),
+                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                        backgroundColor: Colors.black.withOpacity(0.5),
+                        foregroundColor: neonPink,
+                      ),
+                      child: const Text("RESET", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, letterSpacing: 2)),
+                    ),
                   ),
                 ),
               ],
             ),
 
             if (_notaFinal != null) ...[
-              const SizedBox(height: 15),
+              const SizedBox(height: 30),
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(25),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFCC00),
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)],
+                  gradient: const LinearGradient(
+                    colors: [neonPink, neonCyan],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.white, width: 3),
+                  boxShadow: const [
+                    BoxShadow(color: neonPink, blurRadius: 20),
+                    BoxShadow(color: neonCyan, blurRadius: 40),
+                  ],
                 ),
                 child: Column(
                   children: [
-                    const Text("PROMEDIO FINAL", style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text(_notaFinal!.toStringAsFixed(2), 
-                      style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold, color: Color(0xFF023052))),
-                    Text(_mensaje, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text(
+                      "PROMEDIO FINAL", 
+                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Colors.black, letterSpacing: 2)
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      _notaFinal!.toStringAsFixed(2), 
+                      style: const TextStyle(
+                        fontSize: 60, 
+                        fontWeight: FontWeight.w900, 
+                        color: Colors.white,
+                        shadows: [Shadow(color: Colors.black, offset: Offset(2, 2), blurRadius: 5)]
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      _mensaje, 
+                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Colors.black),
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
               )
@@ -233,10 +410,10 @@ class _PromedioPageState extends State<PromedioPage> {
 
   Widget _buildWeightRow(String label, TextEditingController c1, TextEditingController c2) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          SizedBox(width: 30, child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold))),
+          SizedBox(width: 40, child: Text(label, style: const TextStyle(fontWeight: FontWeight.w900, color: neonGreen, fontSize: 16))),
           Expanded(child: _buildSmallInput(c1, "ES %")),
           const SizedBox(width: 10),
           Expanded(child: _buildSmallInput(c2, "EP %")),
@@ -250,31 +427,68 @@ class _PromedioPageState extends State<PromedioPage> {
       controller: controller,
       keyboardType: TextInputType.number,
       textAlign: TextAlign.center,
-      style: const TextStyle(fontSize: 13),
+      style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         labelText: label,
+        labelStyle: const TextStyle(color: neonPink),
         isDense: true,
-        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-        border: const OutlineInputBorder(),
+        contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+        enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: neonCyan)),
+        focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: neonGreen, width: 2)),
       ),
     );
   }
 
   Widget _buildUnidadCard(String titulo, TextEditingController c1, String l1, TextEditingController c2, String l2) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 10),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      decoration: BoxDecoration(
+        color: darkPanel,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: neonCyan, width: 2),
+        boxShadow: const [BoxShadow(color: neonCyan, blurRadius: 8)],
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(titulo, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF023052), fontSize: 13)),
-            const SizedBox(height: 8),
+            Text(
+              titulo, 
+              style: const TextStyle(fontWeight: FontWeight.w900, color: neonGreen, fontSize: 16, letterSpacing: 2)
+            ),
+            const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(child: TextField(controller: c1, decoration: InputDecoration(labelText: l1, border: const OutlineInputBorder(), isDense: true), keyboardType: TextInputType.number)),
-                const SizedBox(width: 10),
-                Expanded(child: TextField(controller: c2, decoration: InputDecoration(labelText: l2, border: const OutlineInputBorder(), isDense: true), keyboardType: TextInputType.number)),
+                Expanded(
+                  child: TextField(
+                    controller: c1, 
+                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    decoration: InputDecoration(
+                      labelText: l1, 
+                      labelStyle: const TextStyle(color: neonPink),
+                      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: neonCyan)),
+                      focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: neonGreen, width: 2)),
+                      isDense: true,
+                    ), 
+                    keyboardType: TextInputType.number
+                  )
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: TextField(
+                    controller: c2, 
+                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    decoration: InputDecoration(
+                      labelText: l2, 
+                      labelStyle: const TextStyle(color: neonPink),
+                      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: neonCyan)),
+                      focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: neonGreen, width: 2)),
+                      isDense: true,
+                    ), 
+                    keyboardType: TextInputType.number
+                  )
+                ),
               ],
             )
           ],
