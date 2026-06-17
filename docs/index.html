@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACADEMIC CHECK - DESCARGA TOTAL GAAAAA</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Courier New', Courier, monospace;
+            color: #fff;
+        }
+
+        /* Canvas de fondo psicodélico */
+        #psycho-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            filter: contrast(1.5) saturate(2);
+        }
+
+        /* Capa de distorsión óptica extra */
+        .overlay-vortex {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 90%);
+            pointer-events: none;
+        }
+
+        /* Contenedor Principal */
+        .main-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.65);
+            border-radius: 24px;
+            backdrop-filter: blur(12px);
+            border: 3px double #ff007f;
+            box-shadow: 0 0 30px #ff007f, inset 0 0 20px #00ffff;
+            animation: containerFloat 4s ease-in-out infinite alternate, hueShift 10s linear infinite;
+        }
+
+        /* Efecto Glitch Brutal para el Título */
+        .glitch-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            position: relative;
+            color: #00ffff;
+            text-shadow: 3px 3px 0px #ff007f, -3px -3px 0px #00ff00;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            animation: glitch 1s linear infinite;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #00ff00;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-bottom: 35px;
+            text-shadow: 0 0 10px #00ff00;
+            animation: pulseText 1.5s ease-in-out infinite alternate;
+        }
+
+        /* El Botón Épico y Extravagante */
+        .download-btn {
+            display: inline-block;
+            position: relative;
+            padding: 24px 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, #ff007f, #7f00ff, #00ffff, #00ff00, #ff007f);
+            background-size: 400% 400%;
+            border: 4px solid #fff;
+            border-radius: 50px;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 0 25px #ff007f, 0 0 50px #00ffff;
+            transition: all 0.2s ease;
+            animation: gradientMove 3s linear infinite, btnWobble 2s ease-in-out infinite alternate;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.15) rotate(2deg);
+            box-shadow: 0 0 50px #ff00ea, 0 0 100px #00ffd5;
+            letter-spacing: 6px;
+        }
+
+        .download-btn:active {
+            transform: scale(0.95) rotate(-2deg);
+        }
+
+        /* Mensajes de la Beba Army */
+        .army-footer {
+            margin-top: 35px;
+            font-size: 0.9rem;
+            color: #ff007f;
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px #ff007f;
+            animation: crazySway 0.5s linear infinite alternate;
+        }
+
+        /* --- ANIMACIONES CSS --- */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes containerFloat {
+            0% { transform: translate(-50%, -46%) scale(0.98); }
+            100% { transform: translate(-50%, -54%) scale(1.02); }
+        }
+
+        @keyframes hueShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        @keyframes pulseText {
+            0% { opacity: 0.4; text-shadow: 0 0 5px #00ff00; }
+            100% { opacity: 1; text-shadow: 0 0 20px #00ff00, 0 0 30px #00ffff; }
+        }
+
+        @keyframes btnWobble {
+            0% { transform: rotate(-3deg); }
+            100% { transform: rotate(3deg); }
+        }
+
+        @keyframes crazySway {
+            0% { transform: skewX(-10deg) scale(0.95); color: #ff007f; }
+            100% { transform: skewX(10deg) scale(1.05); color: #00ffff; }
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 3px 3px 0px #ff007f, -3px -3px 0px #00ff00; }
+            15% { text-shadow: -3px 2px 0px #ff007f, 3px -2px 0px #00ffff; }
+            30% { text-shadow: 4px -3px 0px #00ff00, -4px 3px 0px #ff007f; }
+            45% { text-shadow: -2px -2px 0px #00ffff, 2px 2px 0px #00ff00; }
+            60% { text-shadow: 3px 3px 0px #ff007f, -3px -3px 0px #00ff00; }
+            100% { text-shadow: -3px 2px 0px #ff007f, 3px -2px 0px #00ffff; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="psycho-canvas"></canvas>
+    <div class="overlay-vortex"></div>
+
+    <div class="main-container">
+        <h1 class="glitch-title">ACADEMIC CHECK</h1>
+        <p class="subtitle">¡BAJATE EL APK MAS EXCLUSIVO!</p>
+        
+        <a href="https://github.com/MSRucoba/academic-check/releases/latest/download/app-release.apk" class="download-btn" id="dl-button">
+            DESCARGAR APK
+        </a>
+
+        <div class="army-footer">
+            MAKANAKI GAAAAA - BEBA ARMY UNIDA <br> 🚀 EFECTOS ULTRA PSICODÉLICOS ACTIVADOS 🚀
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('psycho-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Configuración de partículas matemáticas locas (Plasma/Fractal)
+        let particles = [];
+        const numParticles = 85;
+
+        class PsychoParticle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * 6 + 2;
+                this.colorValue = Math.random() * 360;
+                this.speedX = (Math.random() - 0.5) * 6;
+                this.speedY = (Math.random() - 0.5) * 6;
+                this.angle = Math.random() * Math.PI * 2;
+                this.spinSpeed = (Math.random() - 0.5) * 0.1;
+            }
+
+            update() {
+                this.x += Math.sin(this.angle) * this.speedX * 1.5;
+                this.y += Math.cos(this.angle) * this.speedY * 1.5;
+                this.angle += this.spinSpeed;
+                this.colorValue = (this.colorValue + 2) % 360;
+
+                // Rebotar y teletransportar locamente
+                if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius * (1 + Math.sin(this.angle) * 0.5), 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${this.colorValue}, 100%, 50%, 0.8)`;
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = `hsl(${this.colorValue}, 100%, 50%)`;
+                ctx.fill();
+            }
+        }
+
+        // Inicializar partículas
+        for (let i = 0; i < numParticles; i++) {
+            particles.push(new PsychoParticle());
+        }
+
+        // Interactividad con el mouse
+        let mouse = { x: null, y: null };
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        let hueOffset = 0;
+
+        function animate() {
+            // Fondo semitransparente para generar rastro estroboscópico de arrastre
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+            ctx.fillRect(0, 0, width, height);
+
+            hueOffset = (hueOffset + 1) % 360;
+
+            // Dibujar túnel de líneas matemáticas psicodélicas de fondo
+            ctx.strokeStyle = `hsla(${hueOffset}, 100%, 50%, 0.15)`;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for (let i = 0; i < width; i += 40) {
+                ctx.moveTo(i, 0);
+                ctx.lineTo(width - i, height);
+                ctx.moveTo(0, i * (height/width));
+                ctx.lineTo(width, height - i * (height/width));
+            }
+            ctx.stroke();
+
+            // Actualizar y dibujar partículas estroboscópicas
+            particles.forEach(p => {
+                p.update();
+                
+                // Atracción/Repulsión brutal con el puntero
+                if (mouse.x && mouse.y) {
+                    let dx = mouse.x - p.x;
+                    let dy = mouse.y - p.y;
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 250) {
+                        p.x -= (dx / dist) * 4;
+                        p.y -= (dy / dist) * 4;
+                    }
+                }
+                
+                p.draw();
+            });
+
+            // Conectar partículas cercanas con líneas de colores eléctricos
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `hsla(${(particles[i].colorValue + particles[j].colorValue)/2}, 100%, 50%, ${1 - dist/120})`;
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Explosión de colores extras al hacer click en el botón
+        const btn = document.getElementById('dl-button');
+        btn.addEventListener('click', () => {
+            particles.forEach(p => {
+                p.speedX *= 4;
+                p.speedY *= 4;
+                p.radius *= 1.5;
+            });
+        });
+    </script>
+</body>
+</html>
